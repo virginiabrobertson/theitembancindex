@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- itembancindex-search-v8 VERSION 8 - 2026-06-11 -->
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Item Banc Index - Find Basic Items Near You</title>
+<style>
+:root{--blue:#1B4E8F;--blue-light:#EBF3FF;--blue-mid:#2A6DB8;--gold:#C8A84B;--text:#1A2332;--muted:#5A7A9A;--border:#D4E4F0;--white:#FFFFFF;--bg:#F7FAFD;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;line-height:1.6;}
+nav{background:var(--white);border-bottom:2px solid var(--blue);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(27,78,143,0.08);}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo{width:36px;height:36px;border-radius:50%;object-fit:cover;box-shadow:0 2px 8px rgba(27,78,143,0.3);}
+.nav-name{font-family:Georgia,serif;font-size:15px;font-weight:700;color:var(--blue);letter-spacing:0.5px;}
+.nav-index{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+.nav-supplier{font-size:12px;color:var(--muted);text-decoration:none;border:1px solid var(--border);border-radius:20px;padding:6px 14px;}
+.nav-supplier:hover{border-color:var(--blue);color:var(--blue);}
+.hero{text-align:center;padding:48px 24px 36px;background:var(--white);border-bottom:1px solid var(--border);}
+.hero-logo{width:72px;height:72px;border-radius:50%;object-fit:cover;margin-bottom:16px;box-shadow:0 4px 20px rgba(27,78,143,0.2);}
+.hero-eyebrow{font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:600;margin-bottom:14px;}
+.hero h1{font-family:Georgia,serif;font-size:clamp(28px,6vw,48px);font-weight:700;color:var(--blue);line-height:1.15;margin-bottom:12px;}
+.hero h1 em{font-style:italic;color:var(--blue-mid);}
+.hero-sub{font-size:15px;color:var(--muted);max-width:460px;margin:0 auto;line-height:1.8;}
+.search-wrap{max-width:600px;margin:0 auto;padding:28px 20px 0;}
+.search-card{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:28px;box-shadow:0 4px 24px rgba(27,78,143,0.08);}
+.q-label{font-family:Georgia,serif;font-size:17px;font-weight:600;color:var(--text);margin-bottom:10px;display:block;}
+.q-label span{color:var(--blue);}
+.search-input{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:14px 18px;font-size:16px;color:var(--text);outline:none;transition:border-color 0.2s;font-family:inherit;}
+.search-input:focus{border-color:var(--blue);}
+.search-input::placeholder{color:#A0B8CC;font-size:14px;}
+.q-gap{height:18px;}
+.search-btn{width:100%;margin-top:20px;padding:16px;background:var(--blue);border:none;border-radius:10px;color:var(--white);font-family:Georgia,serif;font-size:14px;font-weight:600;letter-spacing:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+.search-btn:hover{background:var(--blue-mid);}
+.search-btn:disabled{opacity:0.5;cursor:not-allowed;}
+.or-divider{display:flex;align-items:center;gap:12px;margin:22px 0 0;}
+.or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.or-text{font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;white-space:nowrap;}
+.cat-label{font-size:12px;color:var(--muted);text-align:center;margin:14px 0 10px;letter-spacing:1px;text-transform:uppercase;}
+.cat-btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
+.cat-btn{padding:10px 18px;background:var(--white);border:1.5px solid var(--border);border-radius:30px;font-size:13px;font-weight:500;color:var(--blue);cursor:pointer;display:flex;align-items:center;gap:6px;font-family:inherit;}
+.cat-btn:hover{background:var(--blue-light);border-color:var(--blue);}
+.cat-btn.active{background:var(--blue);color:var(--white);border-color:var(--blue);}
+.translate-badge{display:none;background:#E8F5E9;border:1px solid #A5D6A7;border-radius:8px;padding:8px 14px;margin-top:14px;font-size:12px;color:#2E7D32;}
+.results-wrap{max-width:600px;margin:24px auto 0;padding:0 20px 60px;}
+.results-count{font-size:13px;color:var(--muted);margin-bottom:14px;}
+.results-count strong{color:var(--blue);}
+.result-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:12px;animation:fadeUp 0.3s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.result-item{font-family:Georgia,serif;font-size:18px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.result-biz{font-size:13px;color:var(--blue);font-weight:500;margin-bottom:4px;}
+.result-loc{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:5px;margin-bottom:10px;}
+.result-loc::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0;}
+.result-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border);}
+.result-price{font-family:Georgia,serif;font-size:20px;font-weight:700;color:var(--blue);}
+.result-curr{font-size:12px;color:var(--muted);margin-left:4px;}
+.result-web{font-size:12px;color:var(--blue-mid);text-decoration:none;border:1px solid var(--border);border-radius:20px;padding:4px 12px;}
+.result-web:hover{background:var(--blue-light);}
+.result-tag{font-size:11px;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:3px 10px;letter-spacing:1px;text-transform:uppercase;}
+.state-box{text-align:center;padding:48px 24px;color:var(--muted);}
+.state-ico{font-size:40px;margin-bottom:14px;}
+.state-box h3{font-family:Georgia,serif;font-size:20px;color:var(--text);margin-bottom:8px;}
+.state-box p{font-size:14px;line-height:1.7;max-width:340px;margin:0 auto;}
+.mission{background:var(--blue);color:var(--white);text-align:center;padding:28px 24px;}
+.mission p{font-size:13px;line-height:1.8;max-width:500px;margin:0 auto;opacity:0.9;}
+.mission strong{color:var(--gold);}
+footer{background:var(--white);border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--muted);}
+footer a{color:var(--blue);text-decoration:none;}
+.footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:8px;}
+@media(max-width:480px){.search-card{padding:20px 16px;}.cat-btn{font-size:12px;padding:8px 12px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="https://itembancindex.io" class="nav-brand">
+    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5Ojf/2wBDAQoKCg0MDRoPDxo3JR8lNzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzf/wAARCABQAFADASIAAhEBAxEB/8QAHAAAAgMBAQEBAAAAAAAAAAAABQYABAcCAwEI/8QAORAAAgECBQIEBAIJBAMAAAAAAQIDBBEABRIhMUFhBhMiURRxgZFSsQcVIyQyYnKhwTNCQ9GSsvD/xAAZAQEAAwEBAAAAAAAAAAAAAAAEAQMFAgD/xAAlEQACAgEEAQUAAwAAAAAAAAABAgARAwQSITEiMkFRcbGh0eH/2gAMAwEAAhEDEQA/ANxxMTCt4hz1/MNDl5UysDqZuFHue3sOuJAJNCQTUKZjnlPSEIhEkh2ABwBrM7rHJEk0dOp6EkG3yAv97fPAGVg+pKOaV6td3eQadXYnoOw/vgaUqDNpaN5TqV0VVJ0G26npYgnDMenU9mUPlb2herzvyohUNUVcqkgXWNV59rk45lzk0oMnxs6G17PEG245U++A9fR5hIPLeOTRpAAJub3vew27Y7PxE7rE1BNuNL6d72Nx8t8LXDjq+P4hzka6jFlnjGYtZmMgHIsTb6WvhuyzO6TMEUo4Vm43uD9cZpJRTxjXFQvKNZ1ljZlv1H1x5Uk9ZS1ZJklMx9RIF1t7H8Xzxw+kx5OU4kjO6ermbHiYXvDeeLWR+RPdJY7BlY3K+2/UHocMOMx0ZG2tGqwYWIC8YZ3HkuUyTNu5FlUcknYD6nGaUdfJWRVBj1zTfxTNpFmfkBeu3GCH6RM1jm8RR088gWmol859r3Y7KLdepwBkrGFKY8vCxTTKWKrYFFtyxHHvb5e+EYF4upxkMv5pmwgooBJSefVH1yRbhU7sR1PFhzj7QRZrmNRBJLWwo7jaiYmJCp4AZTqv3thVziCvoTEZxKkVUNcPqA8xenG4A9sXPC9JC9a0lRUSRVgjIozcLeQggWW3v1xohAMVj+4IsS9GWPEWe56ZJKBp5oIKZyn7J9zv1ksC3a+Gzw5l369yKNMwq6liFukskzLrX2v1IPv/AIwpZ4rxLT09CkjRxC37xqDqTudV7Ab7Ab8d8OWV1grHy2OokeGrNOAeVjVSSGcni9hYD3btj2Y1iXaKkYx5ncbiTnFNJkOayQ0zinKPqT9sSHX+ZTcHDDRVNBm8LSw0xhlW2rQSRG/03KnfAHxS8v6zUVJlNRTjQRILSaRwPZh1B53xY8O0FXlxkziWWWkQCyQafVOrdD7DbntthTKGxBifL9lINOQOo1IZYYmrYYgstOfXGpJV05YDtyR3HfD7k1albRpIjagVBU+46YzTw7mMslRKsiymOQhi7DUF+d+luuGLwO9TQSvQ1Ct5Ac/DysptJGTsVP8A4/LfGdq8Pib7H5/kVp8nkK6P7M58XP5ma5vVSaTpzCOEjsFF/wA8CsomDVC+Y3oml/aG+q6D1EX7mwOGHxBTUiZtndNPUo4lqo52sN4G08HswFwe1jgHS0bmekjZ1LtVtC2nYelyWP8A64NhyDbUTkQ3CWceJP1pWPFVL5dLG5WBkXdSDbVf/GKQyOtilWopWFWGQBXp3uVXckW5F9vv3wFppvLqZ6OZSzRzsuhhvzg1mOYpQUlBLEjIG8xGsNLKwK+n6Aj74elLQWEa2JJl1c4zDOcvMddrK086rGWVhYMu6j5W/vhjz+sWPN4cohRKgR0scclIxsXNr6kPAcX4POB2WVEma5bRGRXkiFeodma4VbXNzf2wBhrHzDxrDWNJpMlWtm50rqAv9sdIgZjfFXILUPuPGQ5HMharzuMiCA68uSq/1C3W682HNj1xWzvMzMXURPJIxupYHe3Bb6k7fLjDHmVZ8dJKZn9IYxlQStkBB55BvYntsemAE1PFITHTsqvsFLsSCSb8r1uD0xTifc+7JO8i0u1YOyCtq1q0jZUHqJNyefvzh5yiraL4zLZy37ppnhPVomN7fMG4wn5XldXBmUck8SGEy3cxtqsDvsMOMiRy59FuWYZaEkK9Q0gC8fXE6wox4+JGnDKOfmJX6WKCpps08+ML8JUQyAoFAvKF9JJ6+nUADxgfkVAr0+W1szWjinmkmZiANyTc+2NT8Y5KudZRJEvpmT1RuOVI3B/+74ydy9PlksVXTlYvOkeqgB2Lo1wv9LBkPcL3xkgn0iaPHcCeNqGJ/ELV1AjPDXKJoyp0mS/pJW/s331YHV0lVJlUUdca53Sf0mqi0qnptpU8k8XwV8S5u+cjKGpowKrzHh0MAVZWA2I9u2CWf5VDT5FU1MFU1SsDxIjzSs7RNexC3J9O5Nuwxo4mICgwmRbuoR8JUjVWT0cV7aWe9mtYMCCT72BwBnpoKX9IMtKoIpo68Kq3/wBusWx7Q5pNlmXx0kMphMih3Y8gdB/k4oZrM1ZfNGdVqI2QM6C3mW4b5iwv74XiRt5Y9GHyFdoA7EeE+Lko5W3KlGLMOQbks1uoJvf5DtgUlJmFKsQhnLo1wTpuFPP/AF98EMozGnmVHMwiSoAnS5IVXYDWLjj1DFyfKvjQ6CZ1f8YIVb8ggjYjax/xbHK5NhpuvqSybhYnGQx1M2cxQ1lRrVl1EIoAtxv8sNWQAVmZTVqj0VEmqMcWgj9KfdrnAbKsnlpYTA8jh5I7zTN/xRdbdzwPv0w7ZVSCnhLmMRs4ACDhFAsq/QYJqsi87ffiXYUPF+0vYRPHXhGWtZ8yyvQKlUKtG2yyL+E/mD0+WHvExnxgNT8602R13xVHKlG6tTLI9SpYBoXIOnUOdOws3BvzjjPHNH4NpYbkGprCz3/lW/5/ljdc28O0OZFXaMJMv8Dr6SvyI3H0wvV3hyviiaJVSop2BBBsrjbkMBY/VfrhCaggi5U2MHqZ1XZHU5zklFm9HGGjeFUe5sQy+k/lgXUUNUuXNCtNI7KVY6Bq23326Ydh4QqZAYp56xhquodtgvtcNgrkvhcZc0chOuVG1WXUP+8KXVhVq7lBwbjcVsiyo53QwKsNRAKaNYn8yMqh25UnnvhzyrLHy6MxU85YrbWGPoj7t7n+UbntzhgFLXVVhICicbEjb+o7/YDBCky6KBV1BWK/wqFsq/Ie/c74oy6pnFHr4liYQvM8KCkLgPMraAdVpBZnb8RHTsOmCmJiYKTcuAqf/9k=" alt="Item Banc" class="nav-logo"/>
+    <div>
+      <div class="nav-name">ITEM BANC</div>
+      <div class="nav-index">INDEX</div>
+    </div>
+  </a>
+  <a href="https://itembanc.io" class="nav-supplier">Are you a supplier? Visit itembanc.io</a>
+</nav>
+
+<div class="hero">
+  <img src="data:image/jpeg;base64,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" alt="Item Banc Index" class="hero-logo"/>
+  <div class="hero-eyebrow">Global Basic Needs Directory</div>
+  <h1>Find Basic Items<br/><em>Near You</em></h1>
+  <p class="hero-sub">Search a public, permanent record of available goods. No ads. No rankings. No fees. Just what is available, where, and at what price.</p>
+</div>
+
+<div class="search-wrap">
+  <div class="search-card">
+    <label class="q-label"><span>What</span> item are you looking for?</label>
+    <input type="text" id="itemInput" class="search-input" placeholder="e.g. rice, arroz, riz, maji, dlo, lumber..."/>
+    <div class="q-gap"></div>
+    <label class="q-label">...and <span>where</span> are you?</label>
+    <input type="text" id="locInput" class="search-input" placeholder="e.g. Lagos, Miami FL, Nairobi, Port-au-Prince"/>
+    <div class="translate-badge" id="translateBadge"></div>
+    <button class="search-btn" id="searchBtn">Search Items</button>
+    <div class="or-divider"><span class="or-text">or search by category</span></div>
+    <div class="cat-label">Select a Basic Needs category</div>
+    <div class="cat-btns">
+      <button class="cat-btn" data-cat="Paper">Paper</button>
+      <button class="cat-btn" data-cat="Food">Food</button>
+      <button class="cat-btn" data-cat="Clothing">Clothing</button>
+      <button class="cat-btn" data-cat="Medical">Medical</button>
+      <button class="cat-btn" data-cat="Building">Building</button>
+    </div>
+  </div>
+</div>
+
+<div class="results-wrap" id="resultsWrap" style="display:none">
+  <div class="results-count" id="resultsCount"></div>
+  <div id="resultsContainer"></div>
+</div>
+
+<div class="mission">
+  <p>Item Banc Index creates a <strong>fair market value standard</strong> for basic human needs items worldwide. Every item listed is published to the blockchain - permanent, transparent, and free to search.</p>
+</div>
+
+<footer>
+  <div>2026 Item Banc | <a href="https://itembanc.io">itembanc.io</a> | <a href="https://itembancindex.io">itembancindex.io</a></div>
+  <div class="footer-links">
+    <a href="https://itembanc.io">List Your Items</a>
+    <a href="https://itembancindex.io">Price Index</a>
+    <a href="https://itembanc.io/contact">Contact</a>
+  </div>
+</footer>
+
+<script id="lookup-data" type="application/json">
+{"papel higienico":["Paper","toilet paper"],"papel de bano":["Paper","toilet paper"],"papel toalla":["Paper","paper towel"],"servilleta":["Paper","napkin"],"panuelito":["Paper","kleenex"],"papel":["Paper","copy paper"],"papier toilette":["Paper","toilet paper"],"papier hygienique":["Paper","toilet paper"],"essuie tout":["Paper","paper towel"],"serviette en papier":["Paper","napkin"],"mouchoir":["Paper","kleenex"],"papier":["Paper","copy paper"],"papel toalha":["Paper","paper towel"],"guardanapo":["Paper","napkin"],"lenco":["Paper","kleenex"],"karatasi ya choo":["Paper","toilet paper"],"taulo ya karatasi":["Paper","paper towel"],"karatasi":["Paper","copy paper"],"takarda":["Paper","copy paper"],"tabar gida":["Paper","copy paper"],"papye":["Paper","copy paper"],"mouchwa":["Paper","kleenex"],"tissue":["Paper","kleenex"],"tisu":["Paper","kleenex"],"kertas toilet":["Paper","toilet paper"],"kertas":["Paper","copy paper"],"iwe igbonse":["Paper","toilet paper"],"iwe":["Paper","copy paper"],"tualet bumaga":["Paper","toilet paper"],"kagaz":["Paper","copy paper"],"atun":["Food","tuna"],"ton":["Food","tuna"],"thon":["Food","tuna"],"atum":["Food","tuna"],"samaki":["Food","tuna"],"kifi":["Food","tuna"],"eja":["Food","tuna"],"tunets":["Food","tuna"],"ryba":["Food","tuna"],"pollo":["Food","chicken"],"poulet":["Food","chicken"],"frango":["Food","chicken"],"kuku":["Food","chicken"],"kaza":["Food","chicken"],"poul":["Food","chicken"],"manok":["Food","chicken"],"ayam":["Food","chicken"],"adie":["Food","chicken"],"kuritsa":["Food","chicken"],"frijoles":["Food","black beans"],"frijol":["Food","black beans"],"pwa":["Food","black beans"],"haricots":["Food","black beans"],"feijao":["Food","black beans"],"maharagwe":["Food","black beans"],"wake":["Food","black beans"],"beans":["Food","black beans"],"kacang":["Food","black beans"],"ewa":["Food","black beans"],"fasol":["Food","black beans"],"lentejas":["Food","lentils"],"lentilles":["Food","lentils"],"lentilha":["Food","lentils"],"dengu":["Food","lentils"],"lantiy":["Food","lentils"],"lentil":["Food","lentils"],"mantequilla de mani":["Food","peanut butter"],"beurre de cacahuete":["Food","peanut butter"],"siagi ya karanga":["Food","peanut butter"],"pasta":["Food","pasta"],"pates":["Food","pasta"],"macarrao":["Food","pasta"],"arroz":["Food","rice"],"riz":["Food","rice"],"bigas":["Food","rice"],"beras":["Food","rice"],"mchele":["Food","rice"],"wali":["Food","rice"],"shinkafa":["Food","rice"],"diri":["Food","rice"],"iresi":["Food","rice"],"ris":["Food","rice"],"sal":["Food","salt"],"sel":["Food","salt"],"asin":["Food","salt"],"chumvi":["Food","salt"],"gishiri":["Food","salt"],"garam":["Food","salt"],"iyo":["Food","salt"],"sol":["Food","salt"],"cafe":["Food","coffee"],"kafe":["Food","coffee"],"kape":["Food","coffee"],"kahawa":["Food","coffee"],"kofi":["Food","coffee"],"kopi":["Food","coffee"],"kofe":["Food","coffee"],"te":["Food","tea"],"the":["Food","tea"],"cha":["Food","tea"],"chai":["Food","tea"],"shayi":["Food","tea"],"tsaa":["Food","tea"],"teh":["Food","tea"],"tii":["Food","tea"],"chay":["Food","tea"],"tomate":["Food","tomatoes"],"tomat":["Food","tomatoes"],"kamatis":["Food","tomatoes"],"nyanya":["Food","tomatoes"],"tumatir":["Food","tomatoes"],"tomati":["Food","tomatoes"],"agua":["Food","water"],"eau":["Food","water"],"maji":["Food","water"],"ruwan sha":["Food","water"],"dlo":["Food","water"],"tubig":["Food","water"],"air":["Food","water"],"omi":["Food","water"],"voda":["Food","water"],"aceite":["Food","cooking oil"],"huile":["Food","cooking oil"],"oleo":["Food","cooking oil"],"mafuta":["Food","cooking oil"],"lwil":["Food","cooking oil"],"langis":["Food","cooking oil"],"minyak":["Food","cooking oil"],"epo":["Food","cooking oil"],"maslo":["Food","cooking oil"],"mai":["Food","cooking oil"],"leche":["Food","milk"],"lait":["Food","milk"],"maziwa":["Food","milk"],"madara":["Food","milk"],"let":["Food","milk"],"gatas":["Food","milk"],"susu":["Food","milk"],"wara":["Food","milk"],"moloko":["Food","milk"],"jugo":["Food","juice"],"jus":["Food","juice"],"juisi":["Food","juice"],"ji":["Food","juice"],"juice":["Food","juice"],"oje":["Food","juice"],"sok":["Food","juice"],"sardina":["Food","sardines"],"sardine":["Food","sardines"],"sardinha":["Food","sardines"],"maiz":["Food","rice"],"sandalias":["Clothing","sandals"],"sandales":["Clothing","sandals"],"sandalia":["Clothing","sandals"],"sandali":["Clothing","sandals"],"sandal":["Clothing","sandals"],"sandalyas":["Clothing","sandals"],"sandalii":["Clothing","sandals"],"zapatos":["Clothing","shoes"],"chaussures":["Clothing","shoes"],"sapato":["Clothing","shoes"],"viatu":["Clothing","shoes"],"soulye":["Clothing","shoes"],"sapatos":["Clothing","shoes"],"obuv":["Clothing","shoes"],"calcetines":["Clothing","socks"],"chaussettes":["Clothing","socks"],"meia":["Clothing","socks"],"soksi":["Clothing","socks"],"choset":["Clothing","socks"],"medyas":["Clothing","socks"],"kaos kaki":["Clothing","socks"],"sokosi":["Clothing","socks"],"noski":["Clothing","socks"],"ropa interior":["Clothing","underwear"],"sous-vetements":["Clothing","underwear"],"roupa interior":["Clothing","underwear"],"nguo za ndani":["Clothing","underwear"],"alatika":["Clothing","underwear"],"pakaian dalam":["Clothing","underwear"],"pantalones":["Clothing","jeans"],"calcas":["Clothing","jeans"],"maong":["Clothing","jeans"],"jeans":["Clothing","jeans"],"shorts":["Clothing","shorts"],"celana pendek":["Clothing","shorts"],"sokoto":["Clothing","shorts"],"camiseta":["Clothing","t-shirt"],"kaos":["Clothing","t-shirt"],"chemiz":["Clothing","t-shirt"],"sudadera":["Clothing","sweatshirt"],"sweat":["Clothing","sweatshirt"],"moletom":["Clothing","sweatshirt"],"ropa de bebe":["Clothing","baby clothes"],"vetements bebe":["Clothing","baby clothes"],"roupa de bebe":["Clothing","baby clothes"],"nguo za mtoto":["Clothing","baby clothes"],"rad bebe":["Clothing","baby clothes"],"damit ng bata":["Clothing","baby clothes"],"pakaian bayi":["Clothing","baby clothes"],"toalla":["Clothing","towel"],"serviette":["Clothing","towel"],"taulo":["Clothing","towel"],"sevyet":["Clothing","towel"],"tuwalya":["Clothing","towel"],"handuk":["Clothing","towel"],"manta":["Clothing","blanket"],"couverture":["Clothing","blanket"],"cobertor":["Clothing","blanket"],"blanketi":["Clothing","blanket"],"kouveti":["Clothing","blanket"],"kumot":["Clothing","blanket"],"selimut":["Clothing","blanket"],"odeyalo":["Clothing","blanket"],"almohada":["Clothing","pillow"],"oreiller":["Clothing","pillow"],"travesseiro":["Clothing","pillow"],"mto":["Clothing","pillow"],"zorye":["Clothing","pillow"],"unan":["Clothing","pillow"],"bantal":["Clothing","pillow"],"podushka":["Clothing","pillow"],"ropa":["Clothing","clothes"],"vetements":["Clothing","clothes"],"roupa":["Clothing","clothes"],"nguo":["Clothing","clothes"],"rad":["Clothing","clothes"],"damit":["Clothing","clothes"],"pakaian":["Clothing","clothes"],"aso":["Clothing","clothes"],"odezhda":["Clothing","clothes"],"pantalon":["Clothing","jeans"],"jean":["Clothing","jeans"],"tufafi":["Clothing","clothes"],"riguna":["Clothing","clothes"],"takalma":["Clothing","sandals"],"wando":["Clothing","shorts"],"bata":["Clothing","shoes"],"champu":["Medical","shampoo"],"shampooing":["Medical","shampoo"],"xampu":["Medical","shampoo"],"shampoo":["Medical","shampoo"],"chanpou":["Medical","shampoo"],"sampo":["Medical","shampoo"],"shampun":["Medical","shampoo"],"jabon":["Medical","soap"],"savon":["Medical","soap"],"sabonete":["Medical","soap"],"sabuni":["Medical","soap"],"sabon":["Medical","soap"],"sabun":["Medical","soap"],"mylo":["Medical","soap"],"ose":["Medical","soap"],"primeros auxilios":["Medical","first aid kit"],"premiers secours":["Medical","first aid kit"],"primeiros socorros":["Medical","first aid kit"],"msaada wa kwanza":["Medical","first aid kit"],"premye swen":["Medical","first aid kit"],"pertolongan pertama":["Medical","first aid kit"],"iranlowo akoko":["Medical","first aid kit"],"pervaya pomoshch":["Medical","first aid kit"],"agurbi":["Medical","first aid kit"],"botiquin":["Medical","first aid kit"],"detergente":["Medical","laundry detergent"],"lessive":["Medical","laundry detergent"],"dawa ya kufulia":["Medical","laundry detergent"],"detejan":["Medical","laundry detergent"],"deterjen":["Medical","laundry detergent"],"ose fifolo":["Medical","laundry detergent"],"poroshok":["Medical","laundry detergent"],"panales":["Medical","diapers"],"couches":["Medical","diapers"],"fraldas":["Medical","diapers"],"nepi":["Medical","diapers"],"kouch":["Medical","diapers"],"lampin":["Medical","diapers"],"popok":["Medical","diapers"],"gyale":["Medical","diapers"],"podguzniki":["Medical","diapers"],"nappies":["Medical","diapers"],"toallitas":["Medical","wipes"],"lingettes":["Medical","wipes"],"lencos umidos":["Medical","wipes"],"kitambaa cha mvua":["Medical","wipes"],"linget":["Medical","wipes"],"panyo":["Medical","wipes"],"iponja":["Medical","wipes"],"compresas":["Medical","feminine products"],"serviettes hygieniques":["Medical","feminine products"],"absorventes":["Medical","feminine products"],"abin rufe baki":["Medical","feminine products"],"pads":["Medical","feminine products"],"tampons":["Medical","feminine products"],"mascarilla":["Medical","masks"],"masque":["Medical","masks"],"mascara":["Medical","masks"],"barakoa":["Medical","masks"],"mask":["Medical","masks"],"masker":["Medical","masks"],"maska":["Medical","masks"],"boju":["Medical","masks"],"desinfectante":["Medical","sanitizer"],"desinfectant":["Medical","sanitizer"],"dezenfektan":["Medical","sanitizer"],"antiseptik":["Medical","sanitizer"],"utensils":["Medical","utensils"],"couverts":["Medical","utensils"],"karfen yaro":["Medical","utensils"],"hygiene kit":["Medical","hygiene kit"],"higiene":["Medical","hygiene kit"],"madera":["Building","lumber"],"bois":["Building","lumber"],"madeira":["Building","lumber"],"mbao":["Building","lumber"],"bwa":["Building","lumber"],"kahoy":["Building","lumber"],"kayu":["Building","lumber"],"igi":["Building","lumber"],"derevo":["Building","lumber"],"contrachapado":["Building","plywood"],"contreplaque":["Building","plywood"],"compensado":["Building","plywood"],"plywood":["Building","plywood"],"palaibo":["Building","plywood"],"fanera":["Building","plywood"],"tablas":["Building","boards"],"planches":["Building","boards"],"tabua":["Building","boards"],"tabla":["Building","boards"],"lona":["Building","tarps"],"bache":["Building","tarps"],"turubai":["Building","tarps"],"bwach":["Building","tarps"],"terpal":["Building","tarps"],"kanfasi":["Building","tarps"],"brezent":["Building","tarps"],"lamina de metal":["Building","metal sheeting"],"tole":["Building","metal sheeting"],"chapa de metal":["Building","metal sheeting"],"karatasi ya chuma":["Building","metal sheeting"],"tol":["Building","metal sheeting"],"allon zinc":["Building","metal sheeting"],"cemento":["Building","cement"],"ciment":["Building","cement"],"cimento":["Building","cement"],"saruji":["Building","cement"],"siminti":["Building","cement"],"siman":["Building","cement"],"semento":["Building","cement"],"semen":["Building","cement"],"tsement":["Building","cement"],"martillo":["Building","hammer"],"marteau":["Building","hammer"],"martelo":["Building","hammer"],"nyundo":["Building","hammer"],"mato":["Building","hammer"],"martilyo":["Building","hammer"],"palu":["Building","hammer"],"hamari":["Building","hammer"],"molotok":["Building","hammer"],"amagari":["Building","hammer"],"clavos":["Building","nails"],"clous":["Building","nails"],"pregos":["Building","nails"],"misumari":["Building","nails"],"klou":["Building","nails"],"pako":["Building","nails"],"paku":["Building","nails"],"eekanna":["Building","nails"],"gvozdi":["Building","nails"],"tsumma":["Building","nails"],"destornillador":["Building","screwdriver"],"tournevis":["Building","screwdriver"],"chave de fenda":["Building","screwdriver"],"bisibisi":["Building","screwdriver"],"tounvis":["Building","screwdriver"],"driver":["Building","screwdriver"],"obeng":["Building","screwdriver"],"otvertka":["Building","screwdriver"],"herramientas":["Building","tools"],"outils":["Building","tools"],"ferramentas":["Building","tools"],"zana":["Building","tools"],"zouti":["Building","tools"],"kagamitan":["Building","tools"],"alat":["Building","tools"],"linterna":["Building","flashlight"],"lampe de poche":["Building","flashlight"],"lanterna":["Building","flashlight"],"tochi":["Building","flashlight"],"flach":["Building","flashlight"],"flashlight":["Building","flashlight"],"senter":["Building","flashlight"],"ina ina":["Building","flashlight"],"fonarik":["Building","flashlight"],"fitila":["Building","flashlight"],"cinta adhesiva":["Building","duct tape"],"ruban adhesif":["Building","duct tape"],"fita adesiva":["Building","duct tape"],"tepe":["Building","duct tape"],"riban kolant":["Building","duct tape"],"tape":["Building","duct tape"],"lakban":["Building","duct tape"],"teepu":["Building","duct tape"],"skotch":["Building","duct tape"],"escoba":["Building","broom"],"balai":["Building","broom"],"vassoura":["Building","broom"],"ufagio":["Building","broom"],"bale":["Building","broom"],"walis":["Building","broom"],"sapu":["Building","broom"],"metla":["Building","broom"],"aborisi":["Building","broom"],"materiales de construccion":["Building","building materials"],"materiaux de construction":["Building","building materials"],"vifaa vya ujenzi":["Building","building materials"],"kayan gini":["Building","building materials"],"2x4":["Building","lumber"],"boards":["Building","boards"],"wood":["Building","lumber"],"concrete":["Building","cement"],"quikcrete":["Building","cement"],"hardware":["Building","tools"],"rebar":["Building","rebar"],"torch":["Building","flashlight"]}
+</script>
+<script>
+var SEARCH_API='/.netlify/functions/search';
+
+var LOOKUP=JSON.parse(document.getElementById('lookup-data').textContent);
+
+var CAT_KEYWORDS={
+  'Paper':['toilet paper','paper towel','copy paper','paper plate','paper cup','napkin','kleenex','tissue'],
+  'Food':['tuna','chicken','beans','sardine','peanut butter','pasta','rice','salt','coffee','tea','tomato','lentil','water','cooking oil','milk','juice'],
+  'Clothing':['sandal','shoe','sock','underwear','jean','shorts','t-shirt','tshirt','sweatshirt','baby clothes','towel','blanket','pillow'],
+  'Medical':['shampoo','soap','first aid','laundry detergent','hygiene','diaper','wipe','feminine','mask','sanitizer'],
+  'Building':['plywood','lumber','2x4','tarp','metal sheet','cement','hammer','nail','screwdriver','flashlight','rebar','duct tape','broom']
+};
+
+function translateInput(raw){
+  var inp=raw.toLowerCase().trim();
+  if(inp.length<2) return null;
+  if(LOOKUP[inp]) return {category:LOOKUP[inp][0],term:LOOKUP[inp][1]};
+  var keys=Object.keys(LOOKUP);
+  for(var i=0;i<keys.length;i++){
+    var k=keys[i];
+    if(k.length>=3&&inp.indexOf(k)!==-1) return {category:LOOKUP[k][0],term:LOOKUP[k][1]};
+  }
+  for(var i=0;i<keys.length;i++){
+    var k=keys[i];
+    if(inp.length>=3&&k.indexOf(inp)!==-1) return {category:LOOKUP[k][0],term:LOOKUP[k][1]};
+  }
+  return null;
+}
+
+function doSearch(){
+  var item=document.getElementById('itemInput').value.trim();
+  var loc=document.getElementById('locInput').value.trim();
+  if(!item&&!loc){showState('hint');return;}
+  document.querySelectorAll('.cat-btn').forEach(function(b){b.classList.remove('active');});
+  var badge=document.getElementById('translateBadge');
+  var searchTerms=[item];
+  var translated=null;
+  if(item){
+    translated=translateInput(item);
+    if(translated&&translated.term!==item.toLowerCase()){
+      searchTerms.push(translated.term);
+      badge.textContent='Translated "'+item+'" to "'+translated.term+'" ('+translated.category+')';
+      badge.style.display='block';
+    } else {
+      badge.style.display='none';
+    }
+  }
+  runSearch(searchTerms,loc,null);
+}
+
+function catSearch(btn){
+  document.querySelectorAll('.cat-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  var cat=btn.getAttribute('data-cat');
+  var loc=document.getElementById('locInput').value.trim();
+  document.getElementById('itemInput').value='';
+  document.getElementById('translateBadge').style.display='none';
+  runSearch(null,loc,cat);
+}
+
+function runSearch(terms,loc,cat){
+  var btn=document.getElementById('searchBtn');
+  btn.disabled=true;
+  btn.textContent='Searching...';
+  showState('loading');
+  var params=[];
+  if(terms&&terms.length>0) params.push('terms='+encodeURIComponent(terms.join(',')));
+  if(loc) params.push('loc='+encodeURIComponent(loc));
+  if(cat) params.push('cat='+encodeURIComponent(cat));
+  var url=SEARCH_API+(params.length>0?'?'+params.join('&'):'');
+  fetch(url)
+    .then(function(r){return r.json();})
+    .then(function(j){
+      btn.disabled=false;
+      btn.textContent='Search Items';
+      if(!j.records||j.records.length===0){showState('empty');return;}
+      renderResults(j.records,terms?terms[0]:cat,loc);
+    })
+    .catch(function(){
+      btn.disabled=false;
+      btn.textContent='Search Items';
+      showState('error');
+    });
+}
+
+function renderResults(records,query,loc){
+  var wrap=document.getElementById('resultsWrap');
+  var container=document.getElementById('resultsContainer');
+  var count=document.getElementById('resultsCount');
+  wrap.style.display='block';
+  var n=records.length;
+  var qStr=query?('\x22'+query+'\x22'):'items';
+  var lStr=loc?' near '+loc:'';
+  count.innerHTML='<strong>'+n+'</strong> result'+(n!==1?'s':'')+' for '+qStr+lStr;
+  container.innerHTML='';
+  records.forEach(function(rec,i){
+    var f=rec.fields;
+    var name=f['Item Name']||'Item';
+    var location=f['Item Location']||'';
+    var price=f['Item Price']?parseFloat(f['Item Price']).toLocaleString():'';
+    var curr=f['Item Currency']||'USD';
+    var biz=f['Business Name']||'';
+    var web=f['Website']||'';
+    var webHtml=web?('<a href=\x22'+(web.indexOf('http')===0?web:'https://'+web)+'\x22 target=\x22_blank\x22 class=\x22result-web\x22>Visit site</a>'):'<span class=\x22result-tag\x22>Verified</span>';
+    var priceHtml=price?('<span class=\x22result-price\x22>'+price+'<span class=\x22result-curr\x22>'+curr+'</span></span>'):'<span class=\x22result-tag\x22>Price on request</span>';
+    var card=document.createElement('div');
+    card.className='result-card';
+    card.style.animationDelay=(i*0.06)+'s';
+    card.innerHTML='<div class=\x22result-item\x22>'+name+'</div>'+(biz?'<div class=\x22result-biz\x22>'+biz+'</div>':'')+'<div class=\x22result-loc\x22>'+location+'</div><div class=\x22result-footer\x22>'+priceHtml+webHtml+'</div>';
+    container.appendChild(card);
+  });
+  wrap.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function showState(type){
+  var wrap=document.getElementById('resultsWrap');
+  var container=document.getElementById('resultsContainer');
+  var count=document.getElementById('resultsCount');
+  wrap.style.display='block';
+  count.innerHTML='';
+  if(type==='loading'){
+    container.innerHTML='<div class=\x22state-box\x22><div class=\x22state-ico\x22>&#128269;</div><h3>Searching the index...</h3><p>Looking through the global inventory record.</p></div>';
+  } else if(type==='empty'){
+    container.innerHTML='<div class=\x22state-box\x22><div class=\x22state-ico\x22>&#128209;</div><h3>No items found yet</h3><p>This area may not have suppliers listed yet. Try a broader location or different item name.</p></div>';
+  } else if(type==='error'){
+    container.innerHTML='<div class=\x22state-box\x22><div class=\x22state-ico\x22>&#9888;</div><h3>Connection issue</h3><p>Could not reach the index. Please check your connection and try again.</p></div>';
+  } else {
+    wrap.style.display='none';
+  }
+}
+
+document.getElementById('searchBtn').addEventListener('click',doSearch);
+document.getElementById('itemInput').addEventListener('keydown',function(e){if(e.key==='Enter')doSearch();});
+document.getElementById('locInput').addEventListener('keydown',function(e){if(e.key==='Enter')doSearch();});
+document.querySelectorAll('.cat-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){catSearch(btn);});
+});
+</script>
+</body>
+</html>
