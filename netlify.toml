@@ -1,2 +1,13 @@
 [functions]
   directory = "netlify/functions"
+
+[build.environment]
+  # Not a secret: Firebase web config API keys only identify the project to
+  # Google's backend - they don't grant access by themselves (that's what
+  # Firebase's own database security rules are for, e.g. mint/{} being
+  # explicitly public-read). This exact key is already visible in several
+  # other live pages across the main mint.itembanc.io app. Netlify's secrets
+  # scanner pattern-matches anything shaped like a Google API key
+  # ("AIza..."), which is a well-known false positive for this specific
+  # case - see https://ntl.fyi/configure-secrets-scanning.
+  SECRETS_SCAN_SMART_DETECTION_OMIT_VALUES = "AIzaSyD1XtO4qPgOf39nf7xLjwF6tcbMN0tWk5A"
