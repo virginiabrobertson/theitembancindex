@@ -265,14 +265,21 @@ function runSearch(terms,loc,cat){
     });
 }
 
+// Item fields are free text typed by sellers and read straight from the
+// public Firebase mint/ records, so escape everything before it goes
+// into innerHTML.
+function escapeHtml(v){
+  return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
 function renderResults(records,query,loc){
   var wrap=document.getElementById('resultsWrap');
   var container=document.getElementById('resultsContainer');
   var count=document.getElementById('resultsCount');
   wrap.style.display='block';
   var n=records.length;
-  var qStr=query?('\x22'+query+'\x22'):'items';
-  var lStr=loc?' near '+loc:'';
+  var qStr=query?('\x22'+escapeHtml(query)+'\x22'):'items';
+  var lStr=loc?' near '+escapeHtml(loc):'';
   count.innerHTML='<strong>'+n+'</strong> result'+(n!==1?'s':'')+' for '+qStr+lStr;
   container.innerHTML='';
   records.forEach(function(rec,i){
@@ -281,10 +288,10 @@ function renderResults(records,query,loc){
     // separate currency (price is whatever free-text string the seller
     // typed, e.g. "$500") and no website.
     var f=rec.fields;
-    var name=f.what||'Item';
-    var location=f.where||'';
-    var price=f.price||'';
-    var biz=f.who||'';
+    var name=escapeHtml(f.what||'Item');
+    var location=escapeHtml(f.where||'');
+    var price=escapeHtml(f.price||'');
+    var biz=escapeHtml(f.who||'');
     var webHtml='<span class=\x22result-tag\x22>Verified</span>';
     var priceHtml=price?('<span class=\x22result-price\x22>'+price+'</span>'):'<span class=\x22result-tag\x22>Price on request</span>';
     var card=document.createElement('div');
